@@ -1,0 +1,48 @@
+Intake
+
+Donor tracking: who gave what, with a simple donor list
+Donation receipts for tax purposes
+Batch intake for big deliveries, such as scanning one item and entering a quantity
+Photo capture for items with no barcode
+Weight-based entry for produce and bulk goods
+
+Tracking
+
+Categories and tags (shelf-stable, refrigerated, frozen, allergen-friendly, halal, kosher, baby items)
+Storage locations (shelf, freezer, back room)
+Cycle counts: a quick "check this shelf" mode to fix drift between the app and reality
+Waste logging: what was discarded and why
+Item history: the full life of any item, from intake to checkout
+
+Distribution
+
+Client check-in and visit tracking (with privacy limits)
+Household size limits or "points" systems for client-choice pantries
+Pre-built boxes or bags for quick pickup
+Online ordering and pickup scheduling (phase two)
+Dietary needs matching
+
+Reporting
+
+Pounds distributed, households served, and top-needed items
+Reports for funders and grant applications, which pantries often need to produce
+Reports in the formats food bank networks require, such as for regional food banks
+
+Team and operations
+
+Roles and permissions (volunteer, manager, admin)
+Volunteer shift tracking
+Audit log of who did what
+Multi-location support for pantries with more than one site
+
+Technical
+
+Offline mode with sync
+CSV import and export, since many pantries start in spreadsheets
+Wishlist or "needed items" list that can be shared with donors
+
+Priorities
+
+MVP: scanning, intake, inventory list, checkout, expiration, low stock
+Next: categories, locations, waste log, CSV import and export, reports
+Later: client features, ordering, donor management, multi-location
