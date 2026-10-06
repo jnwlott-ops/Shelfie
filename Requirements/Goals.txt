@@ -1,0 +1,9 @@
+Our primary goal is to build a pro-bono application for food pantries that streamlines intake, tracking, and distribution of food items, 
+while providing robust reporting and operational tools to support efficient pantry management.
+
+Our design stresses simplicity of use and accessibility, ensuring that volunteers and staff of all technical skill levels can efficiently manage pantry operations.
+
+Our secondary goal is to learn by working through the tough problems, doing our research, and break into the developer industry 
+by gaining hands-on experience, real-world problem-solving, and building a portfolio of meaningful projects, starting with this one 
+built for a noble cause.
+

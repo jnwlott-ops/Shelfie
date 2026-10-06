@@ -1,0 +1,94 @@
+Shelfie - Recommended Tech Stack
+
+Source documents: Goals.txt, Features.txt, DetailedAnalysis.txt
+
+
+RECOMMENDATION IN ONE LINE
+
+A TypeScript PWA built with Next.js, backed by Supabase (Postgres, auth, file storage), deployed on a managed host.
+
+
+WHY THIS FITS SHELFIE
+
+- Volunteers of any skill level, on their own phones: a PWA installs from a link, needs no app store, and works on any device with a camera.
+- A small team that is also learning: one language, one repo, and very few services to run.
+- A pro bono product: low cost, with a free tier for development and a small, predictable bill in production.
+- Sensitive data later (clients and households): Postgres row-level security gives real protection at the database, not just in app code.
+
+
+THE STACK
+
+Language
+- TypeScript everywhere (front end, server code, tests).
+
+App framework
+- Next.js (App Router). It gives one project for the UI and server-side logic, so the MVP needs no separate API service. Server actions and route handlers cover anything that must not run in the browser (receipts, reports, imports).
+
+UI
+- Tailwind CSS with shadcn/ui (built on Radix). Radix components are accessible by default, which supports the goal of simplicity for every skill level.
+- Design rules: large touch targets, high contrast, and plain labels.
+
+Installable app (PWA)
+- A web manifest plus a service worker (Serwist works with Next.js). In the MVP the service worker only makes the app installable and caches the app shell. Full offline data sync comes later.
+
+Backend and data
+- Supabase: Postgres, Auth, Row Level Security, and Storage (item photos).
+- Schema changes go through Supabase CLI migrations kept in the repo. TypeScript types are generated from the schema.
+- Data access through supabase-js for the MVP. Do not add an ORM until a real need appears.
+
+Barcode scanning
+- Use the barcode-detector package. It follows the browser BarcodeDetector API and falls back to a WASM ZXing decoder where the native API is missing.
+- Run a one-day spike on real phones (iPhone Safari and Android Chrome) first. If it fails, switch to @zxing/browser.
+- Camera access requires HTTPS, which the host provides.
+
+Product lookup
+- Open Food Facts API first. Cache every result in our own products table so repeat scans are instant and we respect their rate limits and attribution terms.
+- When a scan has no match, manual entry and photo capture are a normal path, not an error.
+
+Auth
+- Supabase Auth. No custom password code. Roles (volunteer, manager, admin) are stored per pantry and enforced by row-level security.
+
+Testing and CI
+- Vitest for unit tests, Playwright for end-to-end tests, and axe checks inside Playwright for accessibility.
+- GitHub Actions runs lint, type-check, and tests on every pull request.
+
+Hosting
+- Frontend and server code: Vercel or Netlify. Check the terms before launch. Some free plans exclude commercial use, and a nonprofit program may apply.
+- Database: Supabase free tier for development. Production pantries should use a paid tier, since free projects pause when idle and a cold start in front of a waiting line is unacceptable.
+
+
+ARCHITECTURE RULES TO SET NOW
+
+These are cheap on day one and very expensive to add later.
+
+1. Every table carries a pantry_id, and every row-level security policy filters on it. This is what makes multi-location and multiple pantries possible later.
+2. Use client-generated UUIDs for primary keys, soft deletes (deleted_at), and an updated_at timestamp on every row. This makes offline sync possible without a rewrite.
+3. Never edit stock counts directly. Record every change as an event (intake, checkout, cycle count, waste) and derive the current count. This gives item history, the audit log, and reporting almost for free, and makes cycle counts a simple adjustment event.
+4. Collect the minimum client data. Store no more than needed, and keep it out of the MVP.
+5. Write an audit entry for every create, update, and delete.
+6. Add a minimal donor field to MVP intake, so donor tracking and tax receipts have data to build on later.
+
+
+PHASING
+
+- MVP: scanning, intake, inventory list, checkout, expiration, low stock. Auth, pantry_id scoping, and the event model are built in from the start.
+- Next: categories, locations, waste log, CSV import and export, reports.
+- Later, offline mode: IndexedDB (Dexie) as a local copy plus a sync queue. The rules above are what keep this feasible.
+- Later: client features, ordering, donor management, multi-location.
+
+
+WHAT WE ARE DELIBERATELY NOT USING
+
+- A separate Express or Fastify API: extra service and hosting for no MVP benefit. Revisit if heavy background jobs or outside integrations appear.
+- An ORM (Prisma or Drizzle): Supabase-generated types cover the MVP. Revisit if queries get complex.
+- Python (FastAPI): a second language for a small team.
+- A native app (React Native or Expo): app store friction and more setup. Revisit only if the PWA cannot meet camera or offline needs.
+- Custom authentication: a security risk with no benefit.
+
+
+RISKS AND WHEN TO REVISIT
+
+- Barcode scanning quality on older phones: verify in the spike, and keep manual entry fast.
+- Vendor lock-in to Supabase: it is standard Postgres, so data and migrations can move to another host.
+- Offline sync complexity: the hardest piece. Do not start it until the MVP is in real use.
+- Hosting cost: revisit if pantry count or usage grows.

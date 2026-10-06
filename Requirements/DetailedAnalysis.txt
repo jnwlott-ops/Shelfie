@@ -1,0 +1,62 @@
+Shelfie - Detailed Analysis
+
+Source documents: Goals.txt, Features.txt
+
+
+WHAT SHELFIE WILL BE
+
+Shelfie is a free (pro bono) application that helps food pantries take in, track, and give out food. It also provides reporting and operations tools. The design priority is simplicity and accessibility, so volunteers and staff with any level of technical skill can use it. A second goal is for the team to learn from the hard problems and build a portfolio.
+
+
+PLANNED FEATURES
+
+Intake
+- Donor tracking and tax donation receipts.
+- Batch intake, such as scanning one item and entering a quantity.
+- Photo capture for items with no barcode.
+- Weight-based entry for produce and bulk goods.
+
+Tracking
+- Categories and tags (shelf-stable, refrigerated, frozen, allergen-friendly, halal, kosher, baby items).
+- Storage locations.
+- Cycle counts ("check this shelf" mode) to correct drift between the app and reality.
+- Waste logging.
+- Full item history from intake to checkout.
+
+Distribution
+- Client check-in and visit tracking, with privacy limits.
+- Household size limits or "points" for client-choice pantries.
+- Pre-built boxes or bags.
+- Dietary needs matching.
+- Online ordering and pickup scheduling (phase two).
+
+Reporting
+- Pounds distributed, households served, and top-needed items.
+- Funder and grant reports.
+- Reports in the formats regional food bank networks require.
+
+Team and operations
+- Roles (volunteer, manager, admin).
+- Volunteer shift tracking.
+- Audit log.
+- Multi-location support.
+
+Technical
+- Offline mode with sync.
+- CSV import and export, since many pantries start in spreadsheets.
+- A shareable wishlist of needed items for donors.
+
+
+PRIORITIES
+
+1. MVP: scanning, intake, inventory list, checkout, expiration, and low stock.
+2. Next: categories, locations, waste log, CSV import and export, and reports.
+3. Later: client features, ordering, donor management, and multi-location.
+
+
+OBSERVATIONS
+
+- Donor tracking and tax receipts are listed under Intake, but donor management is in "Later". The MVP intake may need a minimal donor field, or receipts will have to wait.
+- Offline mode with sync isn't in any priority tier. It is a big architectural choice, so it's worth deciding early even if it ships later.
+- Client features carry privacy requirements, and "Later" is a sensible place for them.
+- No tech stack or platform (web, mobile, or both) is specified yet. Barcode scanning and photo capture point toward mobile or a PWA.
